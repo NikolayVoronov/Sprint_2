@@ -29,7 +29,7 @@ class TestBooksCollector:
         collector_1.add_new_book('Сборник пацанских цитат')
         collector_1.set_book_rating('Сборник пацанских цитат', 10)
 
-        assert collector_1.books_rating == {'Сборник пацанских цитат': 10}
+        assert collector_1.get_books_rating() == {'Сборник пацанских цитат': 10}
 
     def test_get_book_rating_positive_rating_positive_result(self):
         collector_2 = BooksCollector()
@@ -58,10 +58,8 @@ class TestBooksCollector:
 
         collector_4.add_new_book('Горе от пума')
         collector_4.add_new_book('Горе от хурма')
-        collector_4.set_book_rating('Горе от пума', 5)
-        collector_4.set_book_rating('Горе от хурма', 7)
 
-        assert collector_4.get_books_rating() == {'Горе от пума': 5, 'Горе от хурма': 7}
+        assert collector_4.get_books_rating() == {'Горе от пума': 1, 'Горе от хурма': 1}
 
     def test_add_book_in_favorites_add_real_book_positive_result(self):
         collector_5 = BooksCollector()
@@ -69,15 +67,16 @@ class TestBooksCollector:
         collector_5.add_new_book('Главные хиты 16-ого века')
         collector_5.add_book_in_favorites('Главные хиты 16-ого века')
 
-        assert 'Главные хиты 16-ого века' in collector_5.favorites
+        assert  collector_5.get_list_of_favorites_books() == ['Главные хиты 16-ого века']
 
     def test_delete_book_from_favorites_delete_real_book_positive_result(self):
         collector_6 = BooksCollector()
 
         collector_6.add_new_book('Главные хиты 16-ого века')
+        collector_6.add_book_in_favorites('Главные хиты 16-ого века')
         collector_6.delete_book_from_favorites('Главные хиты 16-ого века')
 
-        assert collector_6.favorites == []
+        assert collector_6.get_list_of_favorites_books() == []
 
     def test_get_list_of_favorites_books_add_real_books_positive_result(self):
         collector_7 = BooksCollector()
@@ -95,7 +94,7 @@ class TestBooksCollector:
         collector_8.add_new_book('Паша техник: 9 жизней')
         collector_8.set_book_rating('Паша техник: 9 жизней', 11)
 
-        assert collector_8.books_rating == {}
+        assert collector_8.get_books_rating() == {}
 
     def test_set_book_rating_zero_dictionary_is_empty(self):
         collector_9 = BooksCollector()
@@ -103,4 +102,4 @@ class TestBooksCollector:
         collector_9.add_new_book('Паша техник: 9 жизней')
         collector_9.set_book_rating('Паша техник: 9 жизней', 0)
 
-        assert collector_9.books_rating == {}
+        assert collector_9.get_books_rating() == {}
